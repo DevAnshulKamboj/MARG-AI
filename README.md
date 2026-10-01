@@ -1,0 +1,2 @@
+# MARG-AI
+Our SIH-2026-26027 Project
