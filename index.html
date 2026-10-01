@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MARG AI : Movement Allocation and Rail Grid Planning</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
 
         <!-- TOP HEADER -->
         <div class="top-header">
-            <img src="main_logo.png" class="logo" alt="MARG AI Logo">
+            <img src="/static/main_logo.png" class="logo" alt="MARG AI Logo">
 
             <div class="title">
                 MARG AI : MOVEMENT ALLOCATION AND RAIL GRID PLANNING
@@ -22,7 +22,7 @@
 
 
         <!-- SECURITY IMAGE -->
-        <img src="cybersecurity.png" class="side-image" alt="MARG AI Security Illustration">
+        <img src="/static/cybersecurity.png" class="side-image" alt="MARG AI Security Illustration">
 
         <!-- LOGIN BOX -->
         <div class="login-box">
@@ -33,11 +33,13 @@
 
             <div class="login-content">
 
-                <label>USER NAME</label>
+                <!-- The backend logs users in by email address -->
+                <label>EMAIL</label>
                 <input
-                    type="text"
+                    type="email"
                     id="username"
-                    placeholder="Please enter username"
+                    placeholder="Please enter email"
+                    autocomplete="username"
                 >
 
                 <label>PASSWORD</label>
@@ -45,6 +47,7 @@
                     type="password"
                     id="password"
                     placeholder="Please enter password"
+                    autocomplete="current-password"
                 >
 
                 <label>CAPTCHA</label>
@@ -57,10 +60,13 @@
                         type="text"
                         id="captchaInput"
                         placeholder="Enter captcha"
+                        autocomplete="off"
                     >
                 </div>
 
-                <button class="signin-btn" onclick="loginUser()">
+                <div id="message" class="message" role="alert"></div>
+
+                <button type="button" class="signin-btn" id="signinBtn" onclick="loginUser()">
                     ↪ Sign in
                 </button>
 
@@ -80,7 +86,7 @@
 
     </div>
 
-    <script src="script.js"></script>
+    <script src="/static/script.js"></script>
 
 </body>
 </html>
