@@ -1,78 +1,28 @@
 const API_BASE = "https://robots-mines-virginia-operate.trycloudflare.com";
 const TOKEN_KEY = "marg_access_token";
+const LOGIN_URL = "/";   // absolute path to your login page
 
-async function checkAuthentication() {
-    const token = localStorage.getItem(TOKEN_KEY);
-
-    // No login token → go back to login page
-    if (!token) {
-        window.location.href = "../";
-        return;
-    }
-
-    try {
-        const response = await fetch(API_BASE + "/api/me", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        });
-
-        // Token is invalid/expired
-        if (!response.ok) {
-            localStorage.removeItem(TOKEN_KEY);
-            window.location.href = "../";
-            return;
-        }
-
-        // Token is valid → dashboard can stay open
-        console.log("User authenticated");
-
-    } catch (error) {
-        console.error("Authentication check failed:", error);
-        localStorage.removeItem(TOKEN_KEY);
-        window.location.href = "../";
-    }
+function goToLogin() {
+    localStorage.removeItem(TOKEN_KEY);
+    window.location.replace(LOGIN_URL);   // replace() so Back doesn't return here
 }
 
-checkAuthentication();
-
-
-
-const API_BASE = "https://robots-mines-virginia-operate.trycloudflare.com";
-const TOKEN_KEY = "marg_access_token";
-
 async function checkAuthentication() {
     const token = localStorage.getItem(TOKEN_KEY);
-
-    // No token → go back to login
-    if (!token) {
-        window.location.href = "../";
-        return;
-    }
+    if (!token) return goToLogin();
 
     try {
         const response = await fetch(API_BASE + "/api/me", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + token
-            }
+            headers: { "Authorization": "Bearer " + token }
         });
 
-        // Token invalid/expired
-        if (!response.ok) {
-            localStorage.removeItem(TOKEN_KEY);
-            window.location.href = "../";
-            return;
-        }
+        if (!response.ok) return goToLogin();
 
-        // Authentication successful
-        console.log("User authenticated");
-
+        // Valid token: reveal the page
+        document.body.style.visibility = "visible";
     } catch (error) {
         console.error("Authentication check failed:", error);
-        localStorage.removeItem(TOKEN_KEY);
-        window.location.href = "../";
+        goToLogin();
     }
 }
 
