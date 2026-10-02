@@ -103,14 +103,18 @@ async function loginUser() {
             return;
         }
 
-        // Success: keep the JWT so later requests can send
-        // "Authorization: Bearer <token>"
-        localStorage.setItem(TOKEN_KEY, data.access_token);
+        //Clear any old token from the previous localStorage version
+        localStorage.removeItem(TOKEN_KEY);
+
+        // sessionStorage is tied to this tab and wiped when the tab closes
+        sessionStorage.setItem(TOKEN_KEY, data.access_token);
         showMessage("Login successful", false);
 
         if (DASHBOARD_URL) {
-            window.location.href = DASHBOARD_URL;
+            window.location.replace(DASHBOARD_URL);   // same tab, so the token comes along
+            return;
         }
+            
     } catch (err) {
         showMessage("Cannot reach the server. Please try again.");
     } finally {
